@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#FFFFFF</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="statusBar">#FFFFFF</color>
-    <color name="statusBarV21">#C2C2C2</color>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="navyBlue">#00144F</color>
+    <color name="background">#101010</color>
+    <color name="surface">#191919</color>
+    <color name="statusBar">#191919</color>
+    <color name="statusBarV21">#191919</color>
+    <color name="white">#000000</color>
+    <color name="black">#FFFFFF</color>
+    <color name="navyBlue">#DEF4FD</color>
     <color name="blue">#1C53F4</color>
-    <color name="skyBlue">#DEF4FD</color>
+    <color name="skyBlue">#01040F</color>
     <!--    <color name="green">#00BD62</color>-->
     <color name="red">#FF3442</color>
     <!--    <color name="orange">#FF9100</color>-->
-    <color name="grayLight">#F3F3F3</color>
-    <color name="grayMedium">#E9E9E9</color>
-    <!--    <color name="grayDark">#959595</color>-->
+    <color name="grayLight">#1F1F1F</color>
+    <color name="grayMedium">#2E2E2E</color>
+    <!--    <color name="grayDark">#808080</color>-->
     <color name="whiteConstant">#FFFFFF</color>
-    <!--    <color name="navyBlue10">#1A00144F</color>-->
-    <!--    <color name="navyBlue20">#3300144F</color>-->
+    <!--    <color name="navyBlue10">#1ADEF4FD</color>-->
+    <!--    <color name="navyBlue20">#33DEF4FD</color>-->
     <!--    <color name="green10">#1A00BD62</color>-->
     <!--    <color name="green20">#3300BD62</color>-->
     <!--    <color name="red10">#1AFF3442</color>-->

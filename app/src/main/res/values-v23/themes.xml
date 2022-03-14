@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
     <style name="Theme.WarrantyRoster" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:colorBackground">@color/background</item>
@@ -9,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/navyBlue</item>
         <item name="colorOnSecondary">@color/whiteConstant</item>
         <item name="android:statusBarColor">@color/statusBar</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorEdgeEffect">@color/skyBlue</item>
         <item name="snackbarStyle">@style/Theme.WarrantyRoster.Snackbar</item>
         <item name="snackbarTextViewStyle">@style/Theme.WarrantyRoster.Snackbar.TextView</item>
