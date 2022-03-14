@@ -2,16 +2,12 @@ package com.xeniac.dsfut.utils
 
 import com.xeniac.dsfut.models.Status
 
-data class Resource<out T>(
+sealed class Resource<T>(
     val status: Status,
-    val data: T?,
-    val message: String?
+    val data: T? = null,
+    val message: String? = null
 ) {
-    companion object {
-        fun <T> success(data: T?) = Resource(Status.SUCCESS, data, null)
-
-        fun <T> error(message: String, data: T? = null) = Resource(Status.ERROR, data, message)
-
-        fun <T> loading(data: T? = null) = Resource(Status.LOADING, data, null)
-    }
+    class Success<T>(data: T?) : Resource<T>(Status.SUCCESS, data)
+    class Error<T>(message: String, data: T? = null) : Resource<T>(Status.ERROR, data, message)
+    class Loading<T> : Resource<T>(Status.LOADING)
 }
