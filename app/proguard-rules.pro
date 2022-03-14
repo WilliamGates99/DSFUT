@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+##---------------Begin: proguard configuration for Obfuscation Mapping  ----------
+-printseeds obfuscation/seeds.txt
+-printmapping obfuscation/mapping.txt
+##---------------End: proguard configuration for Obfuscation Mapping  ----------
