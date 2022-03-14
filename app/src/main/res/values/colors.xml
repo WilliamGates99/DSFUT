@@ -14,7 +14,7 @@
     <!--    <color name="orange">#FF9100</color>-->
     <color name="grayLight">#F3F3F3</color>
     <color name="grayMedium">#E9E9E9</color>
-    <!--    <color name="grayDark">#959595</color>-->
+    <color name="grayDark">#959595</color>
     <color name="whiteConstant">#FFFFFF</color>
     <!--    <color name="navyBlue10">#1A00144F</color>-->
     <!--    <color name="navyBlue20">#3300144F</color>-->

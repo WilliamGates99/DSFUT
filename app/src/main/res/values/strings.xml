@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">DSFUT</string>
+
+    <!--Pick Up Fragment-->
+    <string name="pick_up_text_title">DSFUT</string>
+    <string name="pick_up_menu_title_pick">Pick Up Player</string>
+    <string name="pick_up_title_essentials">Essential Fields</string>
+    <string name="pick_up_title_partner_id">Partner ID</string>
+    <string name="pick_up_hint_partner_id">Enter Partner ID</string>
+    <string name="pick_up_title_secret_key">Secret Key</string>
+    <string name="pick_up_hint_secret_key">Enter Secret Key</string>
+    <string name="pick_up_title_fifa_version">FIFA Version</string>
+    <string name="pick_up_hint_fifa_version">Enter FIFA Version, Eg: 22</string>
+    <string name="pick_up_title_platform">Platform</string>
+    <string name="pick_up_btn_platform_xbox">Xbox</string>
+    <string name="pick_up_btn_platform_playstation">PlayStation</string>
+    <string name="pick_up_btn_platform_pc">PC</string>
+    <string name="pick_up_btn_save">Save Inputs</string>
+    <string name="pick_up_title_optional">Optional Fields</string>
+    <string name="pick_up_title_min_price">Minimum Price</string>
+    <string name="pick_up_hint_min_price">10000</string>
+    <string name="pick_up_title_max_price">Maximum Price</string>
+    <string name="pick_up_hint_max_price">50000</string>
+    <string name="pick_up_title_take_after">Take After (Second)</string>
+    <string name="pick_up_hint_take_after">4 Seconds</string>
+
 </resources>

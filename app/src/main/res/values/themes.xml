@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="Theme.DSFUT" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:colorBackground">@color/background</item>
@@ -10,9 +10,9 @@
         <item name="colorOnSecondary">@color/whiteConstant</item>
         <item name="android:statusBarColor">@color/statusBarV21</item>
         <item name="android:colorEdgeEffect">@color/skyBlue</item>
-        <item name="snackbarStyle">@style/Theme.WarrantyRoster.Snackbar</item>
-        <item name="snackbarTextViewStyle">@style/Theme.WarrantyRoster.Snackbar.TextView</item>
-        <item name="snackbarButtonStyle">@style/Theme.WarrantyRoster.Snackbar.ActionButton</item>
+        <item name="snackbarStyle">@style/Theme.DSFUT.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Theme.DSFUT.Snackbar.TextView</item>
+        <item name="snackbarButtonStyle">@style/Theme.DSFUT.Snackbar.ActionButton</item>
     </style>
 
     <style name="Theme.DSFUT.Splash" parent="Theme.SplashScreen">
@@ -21,22 +21,22 @@
         <item name="postSplashScreenTheme">@style/Theme.DSFUT</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+    <style name="Theme.DSFUT.Snackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="backgroundTint">@color/red</item>
         <item name="animationMode">slide</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Snackbar.TextView" parent="Widget.MaterialComponents.Snackbar.TextView">
+    <style name="Theme.DSFUT.Snackbar.TextView" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/nunito_semi_bold</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Snackbar.ActionButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <style name="Theme.DSFUT.Snackbar.ActionButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/nunito_bold</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="Theme.DSFUT.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintEnabled">false</item>
         <item name="boxBackgroundColor">@color/grayLight</item>
         <item name="boxCornerRadiusBottomEnd">12dp</item>
@@ -48,40 +48,43 @@
         <item name="boxStrokeErrorColor">@color/red</item>
         <item name="errorTextColor">@color/red</item>
         <item name="errorIconDrawable">@null</item>
-        <item name="errorTextAppearance">@style/Theme.WarrantyRoster.TextInputLayout.Error</item>
-        <item name="helperTextTextAppearance">@style/Theme.WarrantyRoster.TextInputLayout.Helper
+        <item name="errorTextAppearance">@style/Theme.DSFUT.TextInputLayout.Error</item>
+        <item name="helperTextTextAppearance">@style/Theme.DSFUT.TextInputLayout.Helper
         </item>
     </style>
 
-    <style name="Theme.WarrantyRoster.TextInputLayout.Error" parent="Widget.MaterialComponents.TextView">
+    <style name="Theme.DSFUT.TextInputLayout.Error" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/nunito_semi_bold</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.TextInputLayout.Helper" parent="Widget.MaterialComponents.TextView">
+    <style name="Theme.DSFUT.TextInputLayout.Helper" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/nunito_semi_bold</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+    <style name="Theme.DSFUT.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
+        <item name="android:fontFamily">@font/nunito_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.LoadingProgressBar.Button" parent="Widget.MaterialComponents.CircularProgressIndicator.Small">
+    <style name="Theme.DSFUT.LoadingProgressBar.Button" parent="Widget.MaterialComponents.CircularProgressIndicator.Small">
         <item name="android:indeterminate">true</item>
         <item name="indicatorColor">@color/whiteConstant</item>
         <item name="trackCornerRadius">12dp</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.LoadingProgressBar.Toolbar" parent="Widget.MaterialComponents.CircularProgressIndicator.Small">
+    <style name="Theme.DSFUT.LoadingProgressBar.Toolbar" parent="Widget.MaterialComponents.CircularProgressIndicator.Small">
         <item name="android:indeterminate">true</item>
         <item name="indicatorColor">@color/black</item>
         <item name="trackCornerRadius">12dp</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="shapeAppearance">@style/Theme.WarrantyRoster.Button.Appearance</item>
+    <style name="Theme.DSFUT.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="shapeAppearance">@style/Theme.DSFUT.Button.Appearance</item>
         <item name="android:textColor">@color/whiteConstant</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/nunito_bold</item>
@@ -91,19 +94,19 @@
         <item name="android:padding">16dp</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Button.Appearance">
+    <style name="Theme.DSFUT.Button.Appearance">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextAppearance">@style/Theme.WarrantyRoster.Toolbar.Title</item>
+    <style name="Theme.DSFUT.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextAppearance">@style/Theme.DSFUT.Toolbar.Title</item>
         <item name="android:background">@color/surface</item>
         <item name="android:elevation">3dp</item>
         <item name="titleCentered">true</item>
     </style>
 
-    <style name="Theme.WarrantyRoster.Toolbar.Title" parent="Widget.MaterialComponents.TextView">
+    <style name="Theme.DSFUT.Toolbar.Title" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/nunito_extra_bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
