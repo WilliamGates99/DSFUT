@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PickUpViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     application: Application,
     private val mainRepository: MainRepository
 ) : AndroidViewModel(application) {
