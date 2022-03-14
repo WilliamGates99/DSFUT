@@ -20,10 +20,10 @@ interface DsFutAPI {
         @Query("signature")
         signature: String,
         @Query("min_buy")
-        min_buy: String?,
+        minPrice: Int? = null,
         @Query("max_buy")
-        max_buy: String?,
+        maxPrice: Int? = null,
         @Query("take_after")
-        take_after: String?
+        takeAfter: Int? = null
     ): Response<DsFutResponse>
 }
