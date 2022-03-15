@@ -29,18 +29,18 @@ class MainViewModel @Inject constructor(
 
     fun pickUpPlayer(
         feedUrl: String,
-        minPrice: String? = null,
-        maxPrice: String? = null,
-        takeAfter: String? = null
+        minPrice: Int?,
+        maxPrice: Int?,
+        takeAfter: Int?
     ) = viewModelScope.launch {
         safePickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
     }
 
     private suspend fun safePickUpPlayer(
         feedUrl: String,
-        minPrice: String? = null,
-        maxPrice: String? = null,
-        takeAfter: String? = null
+        minPrice: Int?,
+        maxPrice: Int?,
+        takeAfter: Int?
     ) {
         _playerLiveData.postValue(Event(Resource.Loading()))
         try {

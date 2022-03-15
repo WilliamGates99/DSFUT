@@ -12,10 +12,10 @@ interface DsFutAPI {
     suspend fun pickUpPlayer(
         @Url feedUrl: String,
         @Query("min_buy")
-        minPrice: String? = null,
+        minPrice: Int?,
         @Query("max_buy")
-        maxPrice: String? = null,
+        maxPrice: Int?,
         @Query("take_after")
-        takeAfter: String? = null
+        takeAfter: Int?
     ): Response<DsFutResponse>
 }

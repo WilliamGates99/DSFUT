@@ -201,12 +201,16 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                     ContextCompat.getColor(requireContext(), R.color.red)
             }
             else -> {
-                val minPrice = binding.tiEditMinPrice.text?.toString()?.trim()
-                val maxPrice = binding.tiEditMaxPrice.text?.toString()?.trim()
-                val takeAfter = binding.tiEditTakeAfter.text?.toString()?.trim()
-
                 val timestamp = getCurrentTime()
                 val signature = getMd5Signature(partnerId, secretKey, timestamp)
+
+                val minPriceInput = binding.tiEditMinPrice.text.toString().trim()
+                val maxPriceInput = binding.tiEditMaxPrice.text.toString().trim()
+                val takeAfterInput = binding.tiEditTakeAfter.text.toString().trim()
+
+                val minPrice = if (minPriceInput.isNotBlank()) minPriceInput.toInt() else null
+                val maxPrice = if (maxPriceInput.isNotBlank()) maxPriceInput.toInt() else null
+                val takeAfter = if (takeAfterInput.isNotBlank()) takeAfterInput.toInt() else null
 
                 val feedUrl = "$fifaVersion/$platform/$partnerId/$timestamp/$signature"
                 pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
@@ -216,9 +220,9 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
 
     private fun pickUpPlayer(
         feedUrl: String,
-        minPrice: String? = null,
-        maxPrice: String? = null,
-        takeAfter: String? = null
+        minPrice: Int?,
+        maxPrice: Int?,
+        takeAfter: Int?
     ) = viewModel.pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
 
     private fun puckUpObserver() =
