@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">DSFUT</string>
 
+    <!--Errors-->
+    <string name="network_error_connection">Unable to connect to the internet.</string>
+    <string name="network_error_retry">Retry</string>
+
     <!--Pick Up Fragment-->
     <string name="pick_up_text_title">DSFUT</string>
     <string name="pick_up_menu_title_pick">Pick Up Player</string>

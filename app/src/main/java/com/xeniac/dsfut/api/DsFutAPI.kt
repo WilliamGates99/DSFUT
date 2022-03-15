@@ -10,20 +10,20 @@ interface DsFutAPI {
     @GET("api")
     suspend fun pickUpPlayer(
         @Query("fifa")
-        fifaVersion: Int,
+        fifaVersion: String,
         @Query("console")
         platform: String,
         @Query("partner_id")
-        partnerId: Int,
+        partnerId: String,
         @Query("timestamp")
-        currentTime: Long,
+        currentTime: String,
         @Query("signature")
         signature: String,
         @Query("min_buy")
-        minPrice: Int? = null,
+        minPrice: String? = null,
         @Query("max_buy")
-        maxPrice: Int? = null,
+        maxPrice: String? = null,
         @Query("take_after")
-        takeAfter: Int? = null
+        takeAfter: String? = null
     ): Response<DsFutResponse>
 }
