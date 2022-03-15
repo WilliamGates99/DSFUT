@@ -51,10 +51,13 @@ class MainViewModel @Inject constructor(
                         it.error.isNotBlank() -> {
                             val errorMessage = "${it.error} error: ${it.message}"
                             _playerLiveData.postValue(Event(Resource.Error(errorMessage)))
+                            Timber.e("safePickUpPlayer: $errorMessage")
                         }
-                        else -> _playerLiveData.postValue(Event(Resource.Success(it)))
+                        else -> {
+                            _playerLiveData.postValue(Event(Resource.Success(it)))
+                            Timber.i("safePickUpPlayer: ${it.message}")
+                        }
                     }
-                    Timber.i("safePickUpPlayer: ${it.message}")
                 }
             } else {
                 Timber.e(ERROR_NETWORK_CONNECTION)
