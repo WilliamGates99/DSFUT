@@ -48,7 +48,10 @@ class MainViewModel @Inject constructor(
                 val response = mainRepository.pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
                 response.body()?.let {
                     when {
-                        it.error.isNotBlank() -> _playerLiveData.postValue(Event(Resource.Error(it.message)))
+                        it.error.isNotBlank() -> {
+                            val errorMessage = "${it.error} error: ${it.message}"
+                            _playerLiveData.postValue(Event(Resource.Error(errorMessage)))
+                        }
                         else -> _playerLiveData.postValue(Event(Resource.Success(it)))
                     }
                     Timber.i("safePickUpPlayer: ${it.message}")

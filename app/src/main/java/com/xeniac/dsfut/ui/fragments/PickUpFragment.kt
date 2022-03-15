@@ -253,7 +253,7 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                                     }
                                 }
                                 else -> {
-                                    Snackbar.make(requireView(), "Error: $it", LENGTH_INDEFINITE)
+                                    Snackbar.make(requireView(), it, LENGTH_INDEFINITE)
                                         .show()
                                 }
                             }
