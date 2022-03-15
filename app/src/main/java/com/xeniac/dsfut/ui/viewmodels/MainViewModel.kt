@@ -28,27 +28,32 @@ class MainViewModel @Inject constructor(
     val playerLiveData: LiveData<Event<Resource<DsFutResponse>>> = _playerLiveData
 
     fun pickUpPlayer(
-        fifaVersion: String, platform: String, partnerId: String, currentTime: String,
-        signature: String, minPrice: String?, maxPrice: String?, takeAfter: String?
+        feedUrl: String,
+        minPrice: String? = null,
+        maxPrice: String? = null,
+        takeAfter: String? = null
     ) = viewModelScope.launch {
-        safePickUpPlayer(
-            fifaVersion, platform, partnerId, currentTime, signature, minPrice, maxPrice, takeAfter
-        )
+        safePickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
     }
 
     private suspend fun safePickUpPlayer(
-        fifaVersion: String, platform: String, partnerId: String, currentTime: String,
-        signature: String, minPrice: String?, maxPrice: String?, takeAfter: String?
+        feedUrl: String,
+        minPrice: String? = null,
+        maxPrice: String? = null,
+        takeAfter: String? = null
     ) {
         _playerLiveData.postValue(Event(Resource.Loading()))
         try {
             if (hasInternetConnection(getApplication<BaseApplication>())) {
-                val responseBody = mainRepository.pickUpPlayer(
-                    fifaVersion, platform, partnerId, currentTime, signature,
-                    minPrice, maxPrice, takeAfter
-                ).body()
-                _playerLiveData.postValue(Event(Resource.Success(responseBody)))
-                Timber.i("player picked up")
+                val response = mainRepository
+                    .pickUpPlayerWithOptionals(feedUrl, minPrice, maxPrice, takeAfter)
+                response.body()?.let {
+                    when {
+                        it.error.isNotBlank() -> _playerLiveData.postValue(Event(Resource.Error(it.message)))
+                        else -> _playerLiveData.postValue(Event(Resource.Success(it)))
+                    }
+                    Timber.i("safePickUpPlayer: ${it.message}")
+                }
             } else {
                 Timber.e(ERROR_NETWORK_CONNECTION)
                 _playerLiveData.postValue(Event(Resource.Error(ERROR_NETWORK_CONNECTION)))

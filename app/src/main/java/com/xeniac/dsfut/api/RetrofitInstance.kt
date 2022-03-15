@@ -22,7 +22,7 @@ object RetrofitInstance {
             .build()
     }
 
-    val api by lazy {
+    val api: DsFutAPI by lazy {
         retrofit.create(DsFutAPI::class.java)
     }
 }

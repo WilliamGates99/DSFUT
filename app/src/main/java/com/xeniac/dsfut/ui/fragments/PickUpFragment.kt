@@ -23,6 +23,7 @@ import com.xeniac.dsfut.utils.Constants.PREFERENCE_INPUTS
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_PARTNER_ID
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_PLATFORM
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_SECRET_KEY
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,15 +32,13 @@ import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
 
+@AndroidEntryPoint
 class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
 
     private var _binding: FragmentPickUpBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
 
-    private var partnerId: String? = null
-    private var secretKey: String? = null
-    private var fifaVersion: String? = null
     private var platform: String = "xb"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -125,20 +124,19 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
     private fun platformRadioButton() =
         binding.radioGroupPlatform.setOnCheckedChangeListener { _, checkedId ->
             platform = when (checkedId) {
-                ///TODO CHECK IF ID IS INDEX OR ID OF THE VIEW
-                0 -> "xb"
-                1 -> "ps"
-                2 -> "pc"
+                R.id.btn_xbox -> "xb"
+                R.id.btn_playstation -> "ps"
+                R.id.btn_pc -> "pc"
                 else -> "xb"
             }
         }
 
     private fun restoreInputFromPrefs() = CoroutineScope(Dispatchers.IO).launch {
         val inputsPrefs = requireContext().getSharedPreferences(PREFERENCE_INPUTS, MODE_PRIVATE)
-        partnerId = inputsPrefs.getString(PREFERENCE_PARTNER_ID, null)
-        secretKey = inputsPrefs.getString(PREFERENCE_SECRET_KEY, null)
-        fifaVersion = inputsPrefs.getString(PREFERENCE_FIFA_VERSION, null)
-        platform = inputsPrefs.getString(PREFERENCE_PLATFORM, "xb") ?: "xb"
+        val partnerId = inputsPrefs.getString(PREFERENCE_PARTNER_ID, null)
+        val secretKey = inputsPrefs.getString(PREFERENCE_SECRET_KEY, null)
+        val fifaVersion = inputsPrefs.getString(PREFERENCE_FIFA_VERSION, null)
+        val radioBtnId = inputsPrefs.getInt(PREFERENCE_PLATFORM, binding.btnXbox.id)
 
         withContext(Dispatchers.Main) {
             partnerId?.let {
@@ -153,11 +151,7 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                 binding.tiEditFifaVersion.setText(fifaVersion)
             }
 
-            when (platform) {
-                "xb" -> binding.btnXbox.isSelected = true
-                "ps" -> binding.btnPlaystation.isSelected = true
-                "pc" -> binding.btnPc.isSelected = true
-            }
+            binding.radioGroupPlatform.check(radioBtnId)
         }
     }
 
@@ -167,10 +161,10 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
 
     private fun saveInputs() = CoroutineScope(Dispatchers.IO).launch {
         requireContext().getSharedPreferences(PREFERENCE_INPUTS, MODE_PRIVATE).edit().apply {
-            putString(PREFERENCE_PARTNER_ID, partnerId)
-            putString(PREFERENCE_SECRET_KEY, secretKey)
-            putString(PREFERENCE_FIFA_VERSION, fifaVersion)
-            putString(PREFERENCE_PLATFORM, platform)
+            putString(PREFERENCE_PARTNER_ID, binding.tiEditPartnerId.text.toString().trim())
+            putString(PREFERENCE_SECRET_KEY, binding.tiEditSecretKey.text.toString().trim())
+            putString(PREFERENCE_FIFA_VERSION, binding.tiEditFifaVersion.text.toString().trim())
+            putInt(PREFERENCE_PLATFORM, binding.radioGroupPlatform.checkedRadioButtonId)
         }.apply()
     }
 
@@ -183,25 +177,25 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
         val inputMethodManager = requireContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(
-            binding.root.applicationWindowToken, 0
+            requireView().applicationWindowToken, 0
         )
 
-        partnerId = binding.tiEditPartnerId.text.toString().trim()
-        secretKey = binding.tiEditSecretKey.text.toString().trim()
-        fifaVersion = binding.tiEditFifaVersion.text.toString().trim()
+        val partnerId = binding.tiEditPartnerId.text.toString().trim()
+        val secretKey = binding.tiEditSecretKey.text.toString().trim()
+        val fifaVersion = binding.tiEditFifaVersion.text.toString().trim()
 
         when {
-            partnerId.isNullOrBlank() -> {
+            partnerId.isBlank() -> {
                 binding.tiLayoutPartnerId.requestFocus()
                 binding.tiLayoutPartnerId.boxStrokeColor =
                     ContextCompat.getColor(requireContext(), R.color.red)
             }
-            secretKey.isNullOrBlank() -> {
+            secretKey.isBlank() -> {
                 binding.tiLayoutSecretKey.requestFocus()
                 binding.tiLayoutSecretKey.boxStrokeColor =
                     ContextCompat.getColor(requireContext(), R.color.red)
             }
-            fifaVersion.isNullOrBlank() -> {
+            fifaVersion.isBlank() -> {
                 binding.tiLayoutFifaVersion.requestFocus()
                 binding.tiLayoutFifaVersion.boxStrokeColor =
                     ContextCompat.getColor(requireContext(), R.color.red)
@@ -211,24 +205,21 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                 val maxPrice = binding.tiEditMaxPrice.text?.toString()?.trim()
                 val takeAfter = binding.tiEditTakeAfter.text?.toString()?.trim()
 
-                val currentTime = getCurrentTime()
-                val signature = getMd5Signature(partnerId!!, secretKey!!, currentTime)
+                val timestamp = getCurrentTime()
+                val signature = getMd5Signature(partnerId, secretKey, timestamp)
 
-                pickUpPlayer(
-                    fifaVersion!!, platform, partnerId!!, currentTime, signature,
-                    minPrice, maxPrice, takeAfter
-                )
+                val feedUrl = "$fifaVersion/$platform/$partnerId/$timestamp/$signature"
+                pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
             }
         }
     }
 
     private fun pickUpPlayer(
-        fifaVersion: String, platform: String, partnerId: String,
-        currentTime: String, signature: String, minPrice: String?,
-        maxPrice: String?, takeAfter: String?
-    ) = viewModel.pickUpPlayer(
-        fifaVersion, platform, partnerId, currentTime, signature, minPrice, maxPrice, takeAfter
-    )
+        feedUrl: String,
+        minPrice: String? = null,
+        maxPrice: String? = null,
+        takeAfter: String? = null
+    ) = viewModel.pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
 
     private fun puckUpObserver() =
         viewModel.playerLiveData.observe(viewLifecycleOwner) { responseEvent ->
@@ -238,11 +229,12 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                     Status.SUCCESS -> {
                         hideLoadingAnimation()
                         response.data?.let {
-                            if (it.error.isNotBlank()) {
-                                Snackbar.make(binding.root, it.error, LENGTH_INDEFINITE).show()
-                            } else {
-                                val message = "${it.message}\n\nName: ${it.player.name}"
-                                Snackbar.make(binding.root, message, LENGTH_INDEFINITE).show()
+                            val message = "${it.message}\n\nName: ${it.player.name}"
+                            Snackbar.make(requireView(), message, LENGTH_INDEFINITE).apply {
+                                setBackgroundTint(
+                                    ContextCompat.getColor(requireContext(), R.color.green)
+                                )
+                                show()
                             }
                         }
                     }
@@ -261,7 +253,8 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                                     }
                                 }
                                 else -> {
-                                    Snackbar.make(binding.root, it, LENGTH_INDEFINITE).show()
+                                    Snackbar.make(requireView(), "Error: $it", LENGTH_INDEFINITE)
+                                        .show()
                                 }
                             }
                         }
@@ -275,8 +268,8 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
         return calendar.timeInMillis.toString()
     }
 
-    private fun getMd5Signature(partnerId: String, secretKey: String, currentTime: String): String {
-        val input = partnerId + secretKey + currentTime
+    private fun getMd5Signature(partnerId: String, secretKey: String, timestamp: String): String {
+        val input = partnerId + secretKey + timestamp
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(23, '0')
     }
