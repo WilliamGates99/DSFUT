@@ -9,10 +9,7 @@ import retrofit2.http.Url
 interface DsFutAPI {
 
     @GET
-    suspend fun pickUpPlayer(@Url feedUrl: String): Response<DsFutResponse>
-
-    @GET
-    suspend fun pickUpPlayerWithOptionals(
+    suspend fun pickUpPlayer(
         @Url feedUrl: String,
         @Query("min_buy")
         minPrice: String? = null,

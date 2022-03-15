@@ -45,8 +45,7 @@ class MainViewModel @Inject constructor(
         _playerLiveData.postValue(Event(Resource.Loading()))
         try {
             if (hasInternetConnection(getApplication<BaseApplication>())) {
-                val response = mainRepository
-                    .pickUpPlayerWithOptionals(feedUrl, minPrice, maxPrice, takeAfter)
+                val response = mainRepository.pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
                 response.body()?.let {
                     when {
                         it.error.isNotBlank() -> _playerLiveData.postValue(Event(Resource.Error(it.message)))
