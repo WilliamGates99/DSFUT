@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
 import com.xeniac.dsfut.R
@@ -233,11 +234,25 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                     Status.SUCCESS -> {
                         hideLoadingAnimation()
                         response.data?.let {
-                            val message = "${it.message}\n\nName: ${it.player.name}"
-                            Snackbar.make(requireView(), message, LENGTH_INDEFINITE).apply {
-                                setBackgroundTint(
-                                    ContextCompat.getColor(requireContext(), R.color.green)
-                                )
+                            val player = it.player
+                            val playerInfo = requireContext().getString(
+                                R.string.pick_up_dialog_success_player,
+                                player.tradeID,
+                                player.startPrice,
+                                player.buyNowPrice,
+                                player.assetID,
+                                player.resourceID,
+                                player.name,
+                                player.rating,
+                                player.position,
+                                player.expires,
+                                player.transactionID
+                            )
+
+                            MaterialAlertDialogBuilder(requireContext()).apply {
+                                setTitle(it.message)
+                                setMessage(playerInfo)
+                                setPositiveButton(requireContext().getString(R.string.pick_up_dialog_positive)) { _, _ -> }
                                 show()
                             }
                         }

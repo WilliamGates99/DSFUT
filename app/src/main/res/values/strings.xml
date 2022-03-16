@@ -27,5 +27,9 @@
     <string name="pick_up_hint_max_price">50000</string>
     <string name="pick_up_title_take_after">Take After (Second)</string>
     <string name="pick_up_hint_take_after">4 Seconds</string>
+    <string name="pick_up_dialog_positive">Confirm</string>
+    <string name="pick_up_dialog_success_player">Trade ID: %1$d\nStart Price: %2$d\n
+        Buy Now Price: %3$d\nAsset ID: %4$d\nResource ID:: %5$d\nName: %6$s\nRating: %7$d\n
+    Position: %8$s\nExpires: %9$d\nTransaction ID: %10$d\n</string>
 
 </resources>

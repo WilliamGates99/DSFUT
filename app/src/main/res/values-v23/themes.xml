@@ -15,6 +15,7 @@
         <item name="snackbarStyle">@style/Theme.DSFUT.Snackbar</item>
         <item name="snackbarTextViewStyle">@style/Theme.DSFUT.Snackbar.TextView</item>
         <item name="snackbarButtonStyle">@style/Theme.DSFUT.Snackbar.ActionButton</item>
+        <item name="materialAlertDialogTheme">@style/Theme.DSFUT.AlertDialog</item>
     </style>
 
 </resources>
