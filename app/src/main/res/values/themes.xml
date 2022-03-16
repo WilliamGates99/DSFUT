@@ -137,7 +137,6 @@
         <item name="materialAlertDialogBodyTextStyle">@style/Theme.DSFUT.AlertDialog.Body</item>
         <item name="buttonBarPositiveButtonStyle">@style/Theme.DSFUT.AlertDialog.PositiveButton
         </item>
-        <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
 
     <style name="Theme.DSFUT.AlertDialog.Style" parent="MaterialAlertDialog.MaterialComponents">
