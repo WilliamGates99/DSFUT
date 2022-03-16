@@ -13,4 +13,5 @@ object Constants {
 
     //Response Errors
     const val ERROR_NETWORK_CONNECTION = "Unable to connect to the internet"
+    const val ERROR_DSFUT_EMPTY = "empty"
 }

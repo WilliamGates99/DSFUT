@@ -8,6 +8,7 @@
     <!--Pick Up Fragment-->
     <string name="pick_up_text_title">DSFUT</string>
     <string name="pick_up_menu_title_pick">Pick Up Player</string>
+    <string name="pick_up_menu_title_cancel">Cancel Automation</string>
     <string name="pick_up_title_essentials">Essential Fields</string>
     <string name="pick_up_title_partner_id">Partner ID</string>
     <string name="pick_up_hint_partner_id">Enter Partner ID</string>

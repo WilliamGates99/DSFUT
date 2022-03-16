@@ -13,6 +13,7 @@ import com.xeniac.dsfut.utils.Event
 import com.xeniac.dsfut.utils.NetworkHelper.hasInternetConnection
 import com.xeniac.dsfut.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -36,6 +37,11 @@ class MainViewModel @Inject constructor(
         safePickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
     }
 
+    fun cancelPick() = viewModelScope.launch {
+        _playerLiveData.postValue(Event(Resource.Error("Canceled")))
+        Timber.e("cancelPick")
+    }
+
     private suspend fun safePickUpPlayer(
         feedUrl: String,
         minPrice: Int?,
@@ -45,6 +51,7 @@ class MainViewModel @Inject constructor(
         _playerLiveData.postValue(Event(Resource.Loading()))
         try {
             if (hasInternetConnection(getApplication<BaseApplication>())) {
+                delay(500)
                 val response = mainRepository.pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
                 response.body()?.let {
                     when {

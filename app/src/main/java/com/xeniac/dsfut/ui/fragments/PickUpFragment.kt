@@ -18,6 +18,7 @@ import com.xeniac.dsfut.R
 import com.xeniac.dsfut.databinding.FragmentPickUpBinding
 import com.xeniac.dsfut.models.Status
 import com.xeniac.dsfut.ui.viewmodels.MainViewModel
+import com.xeniac.dsfut.utils.Constants.ERROR_DSFUT_EMPTY
 import com.xeniac.dsfut.utils.Constants.ERROR_NETWORK_CONNECTION
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_FIFA_VERSION
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_INPUTS
@@ -25,10 +26,8 @@ import com.xeniac.dsfut.utils.Constants.PREFERENCE_PARTNER_ID
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_PLATFORM
 import com.xeniac.dsfut.utils.Constants.PREFERENCE_SECRET_KEY
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import timber.log.Timber
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -41,6 +40,7 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
     private lateinit var viewModel: MainViewModel
 
     private var platform: String = "xb"
+    private var doSpam = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,6 +52,7 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
         restoreInputFromPrefs()
         saveInputsOnClick()
         pickUpPlayerOnClick()
+        cancelPickOnClick()
         puckUpObserver()
     }
 
@@ -169,8 +170,14 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
         }.apply()
     }
 
-    private fun pickUpPlayerOnClick() = binding.toolbar.menu[0].setOnMenuItemClickListener {
+    private fun pickUpPlayerOnClick() = binding.toolbar.menu[1].setOnMenuItemClickListener {
         getPickUpInput()
+        false
+    }
+
+    private fun cancelPickOnClick() = binding.toolbar.menu[0].setOnMenuItemClickListener {
+        doSpam = false
+        viewModel.cancelPick()
         false
     }
 
@@ -213,6 +220,7 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                 val maxPrice = if (maxPriceInput.isNotBlank()) maxPriceInput.toInt() else null
                 val takeAfter = if (takeAfterInput.isNotBlank()) takeAfterInput.toInt() else null
 
+                doSpam = true
                 val feedUrl = "$fifaVersion/$platform/$partnerId/$timestamp/$signature"
                 pickUpPlayer(feedUrl, minPrice, maxPrice, takeAfter)
             }
@@ -258,10 +266,10 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                         }
                     }
                     Status.ERROR -> {
-                        hideLoadingAnimation()
                         response.message?.let {
                             when {
                                 it.contains(ERROR_NETWORK_CONNECTION) -> {
+                                    hideLoadingAnimation()
                                     Snackbar.make(
                                         binding.root,
                                         requireContext().getString(R.string.network_error_connection),
@@ -271,7 +279,18 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
                                         show()
                                     }
                                 }
+                                it.contains(ERROR_DSFUT_EMPTY) -> {
+                                    when (doSpam) {
+                                        true -> {
+                                            Timber.i("spam goes brrrrrrr…")
+                                            showCancelButton()
+                                            getPickUpInput()
+                                        }
+                                        else -> {}
+                                    }
+                                }
                                 else -> {
+                                    hideLoadingAnimation()
                                     Snackbar.make(requireView(), it, LENGTH_INDEFINITE)
                                         .show()
                                 }
@@ -294,7 +313,7 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
     }
 
     private fun showLoadingAnimation() {
-        binding.toolbar.menu[0].isVisible = false
+        binding.toolbar.menu[1].isVisible = false
         binding.tiEditPartnerId.isEnabled = false
         binding.tiEditSecretKey.isEnabled = false
         binding.tiEditFifaVersion.isEnabled = false
@@ -306,12 +325,21 @@ class PickUpFragment : Fragment(R.layout.fragment_pick_up) {
 
     private fun hideLoadingAnimation() {
         binding.cpiPick.visibility = GONE
-        binding.toolbar.menu[0].isVisible = true
+        binding.toolbar.menu[1].isVisible = true
         binding.tiEditPartnerId.isEnabled = true
         binding.tiEditSecretKey.isEnabled = true
         binding.tiEditFifaVersion.isEnabled = true
         binding.tiEditMinPrice.isEnabled = true
         binding.tiEditMaxPrice.isEnabled = true
         binding.tiEditTakeAfter.isEnabled = true
+        hideCancelButton()
+    }
+
+    private fun showCancelButton() {
+        binding.toolbar.menu[0].isVisible = true
+    }
+
+    private fun hideCancelButton() {
+        binding.toolbar.menu[0].isVisible = false
     }
 }
