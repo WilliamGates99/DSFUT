@@ -1,4 +1,4 @@
-# DSFUT [![platform](https://img.shields.io/badge/platform-Android-success.svg)](https://www.android.com) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/WilliamGates99/DSFUT?include_prereleases) ![GitHub](https://img.shields.io/github/license/WilliamGates99/DSFUT)
+# DSFUT [![platform](https://img.shields.io/badge/platform-Android-success.svg)](https://www.android.com) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/WilliamGates99/DSFUT?include_prereleases) ![GitHub](https://img.shields.io/github/license/WilliamGates99/DSFUT?label=license)
 
 <p>
 	DSFUT is the only platform in the world, created exclusively for suppliers of FUT coins. With this app, you can sell your coins quickly and immediately get money for them.
